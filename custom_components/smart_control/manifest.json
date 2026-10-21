@@ -1,0 +1,11 @@
+{
+  "domain": "smart_control",
+  "name": "Smart Control System",
+  "codeowners": ["@smartcontrolco"],
+  "config_flow": true,
+  "documentation": "https://github.com/smartcontrolco/smart_control",
+  "requirements": [],
+  "dependencies": ["mqtt"],
+  "version": "1.0.0",
+  "iot_class": "local_push"
+}

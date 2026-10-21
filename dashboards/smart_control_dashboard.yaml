@@ -1,0 +1,69 @@
+title: "Smart Control Home Dashboard"
+views:
+  - title: "محاكاة المنزل التفاعلية"
+    icon: "mdi:home-floor-plan"
+    type: panel
+    cards:
+      - type: picture-elements
+        title: "Smart Control Interactive Map"
+        image: "https://demo.home-assistant.io/stub_config/floorplan.png"
+        elements:
+          # --- مكيف غرفة المعيشة والتأثير البصري ---
+          - type: state-icon
+            entity: switch.smart_control_relay1
+            title: "تكييف غرفة المعيشة"
+            style:
+              top: 35%
+              left: 45%
+              transform: translate(-50%, -50%)
+              "--paper-item-icon-color": "#ffb300"
+              border: "2px solid #00b0ff"
+              border-radius: "50%"
+              padding: "6px"
+              background: "rgba(0,0,0,0.4)"
+            tap_action:
+              action: toggle
+
+          - type: conditional
+            conditions:
+              - entity: switch.smart_control_relay1
+                state: "on"
+            elements:
+              - type: state-label
+                entity: switch.smart_control_relay1
+                prefix: "❄️ تبريد نشط: "
+                style:
+                  top: 42%
+                  left: 45%
+                  color: "#00e5ff"
+                  background: "rgba(0, 176, 255, 0.2)"
+                  padding: "4px 8px"
+                  border-radius: "12px"
+                  font-weight: "bold"
+                  font-size: "12px"
+                  box-shadow: "0 0 10px #00b0ff"
+
+          # --- مستشعر الحرارة والرطوبة فوق الغرفة ---
+          - type: state-label
+            entity: sensor.smart_control_living_room_temperature
+            style:
+              top: 25%
+              left: 45%
+              color: "#ffffff"
+              background: "rgba(0, 0, 0, 0.7)"
+              padding: "4px 10px"
+              border-radius: "8px"
+              font-size: "13px"
+              border: "1px solid #444"
+
+          - type: state-label
+            entity: sensor.smart_control_living_room_humidity
+            style:
+              top: 25%
+              left: 58%
+              color: "#80d8ff"
+              background: "rgba(0, 0, 0, 0.7)"
+              padding: "4px 10px"
+              border-radius: "8px"
+              font-size: "13px"
+              border: "1px solid #444"
