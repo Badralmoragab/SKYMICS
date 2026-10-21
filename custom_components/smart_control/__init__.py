@@ -3,7 +3,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 
 DOMAIN = "smart_control"
-PLATFORMS = ["switch", "sensor"]
+PLATFORMS = ["switch"]
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up Smart Control from a config entry."""
