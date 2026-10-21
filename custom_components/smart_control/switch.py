@@ -1,5 +1,4 @@
 """Switch platform for Smart Control Integration."""
-from homeassistant.components.mqtt.mixins import MQTTAvailabilityMixin
 from homeassistant.components.switch import SwitchEntity
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
