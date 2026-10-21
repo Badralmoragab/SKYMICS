@@ -15,14 +15,15 @@ async def async_setup_entry(
         relay_name = f"Relay{i}"
         state_topic = f"esp32/relays/{relay_name}/state"
         command_topic = f"esp32/relays/{relay_name}/set"
-        switches.append(SmartControlRelay(relay_name, state_topic, command_topic))
+        switches.append(SmartControlRelay(hass, relay_name, state_topic, command_topic))
     
     async_add_entities(switches)
 
 class SmartControlRelay(SwitchEntity):
     """Representation of a Smart Control MQTT Relay."""
 
-    def __init__(self, name: str, state_topic: str, command_topic: str):
+    def __init__(self, hass: HomeAssistant, name: str, state_topic: str, command_topic: str):
+        self.hass = hass
         self._name = name
         self._attr_name = f"Smart Control {name}"
         self._attr_unique_id = f"smart_control_{name.lower()}"
@@ -36,15 +37,27 @@ class SmartControlRelay(SwitchEntity):
         return self._is_on
 
     async def async_turn_on(self, **kwargs):
-        await self.hass.components.mqtt.async_publish(
-            self.hass, self._command_topic, "ON", qos=0, retain=False
+        await self.hass.services.async_call(
+            "mqtt",
+            "publish",
+            {
+                "topic": self._command_topic,
+                "payload": "ON",
+            },
+            blocking=True,
         )
         self._is_on = True
         self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs):
-        await self.hass.components.mqtt.async_publish(
-            self.hass, self._command_topic, "OFF", qos=0, retain=False
+        await self.hass.services.async_call(
+            "mqtt",
+            "publish",
+            {
+                "topic": self._command_topic,
+                "payload": "OFF",
+            },
+            blocking=True,
         )
         self._is_on = False
         self.async_write_ha_state()
